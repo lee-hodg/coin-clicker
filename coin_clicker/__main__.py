@@ -20,7 +20,7 @@ import os
 import time
 import requests
 
-import settings
+from coin_clicker import settings
 
 
 # Create a logger object.
