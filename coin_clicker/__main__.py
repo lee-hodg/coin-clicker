@@ -32,6 +32,8 @@ init(autoreset=True)
 # Create a logger object.
 logger = logging.getLogger(__name__)
 
+MAX_REWARD_RETRIES = 5
+
 
 coloredlogs.install(level='DEBUG', logger=logger,
                     fmt='%(asctime)s: %(message)s')
@@ -72,11 +74,11 @@ def claim_reward(code, token):
                                     data={'code': code, 'token': token},
                                     timeout=15)
         response.raise_for_status()
-    except requests.exceptions.RequestException:
+    except requests.exceptions.RequestException as reward_exc:
+        logger.error(reward_exc)
         return None, None
     text_response = response.text
     status_code = response.status_code
-    print(f'Claimed reward with code {code} and token {token}. Result code: {status_code} and text {text_response}')
     return [status_code, text_response]
 
 
@@ -98,7 +100,7 @@ async def get_response_alt(client, event, url, bot_choice):
         response = requests.get(url, headers={"User-Agent": settings.USER_AGENT}, timeout=15)
         response.raise_for_status()
     except requests.exceptions.RequestException as rexc:
-        logger.debug(rexc)
+        logger.error(rexc)
         return None, None
 
     if 'telegram.me' in response.url:
@@ -116,16 +118,21 @@ async def get_response_alt(client, event, url, bot_choice):
         code = headbar.get('data-code')
         token = headbar.get('data-token')
         wait_error = True
-        while wait_error is True:
-            logger.debug(f'\t Trying to claim the reward with code {code} and token {token}...')
+        retry_count = 0
+        while wait_error is True and retry_count <= MAX_REWARD_RETRIES:
+            retry_count += 1
+            logger.debug(f'\t [{retry_count}/{MAX_REWARD_RETRIES}]'
+                         f' Trying to claim the reward with code {code} and token {token}...')
             status_code, text = claim_reward(code, token)
             j_resp = json.loads(text)
             wait_error = 'You must wait' in j_resp['error']
             if wait_error:
                 logger.debug(j_resp['error'])
                 time.sleep(15)
+            elif j_resp['reward']:
+                logger.debug(f"Claimed reward of {j_resp['reward']}")
             else:
-                logger.debug(j_resp['reward'])
+                logger.error(j_resp['error'])
 
 
 def parse_input():
