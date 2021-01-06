@@ -27,14 +27,15 @@ python -m coin_clicker
 ```
 
 You will be asked to enter your phone number and then verify the code they send you on
-the first run. Next you choose which bot you wish to visit sites for. Finally, you can choose
-whether to run the bot in "headless" mode or not. Headless mode means you won't see
-a browser doing the visits vs seeing Chrome popup and being automated (useful for tests).
+the first run. On future runs you can select from existing numbers.
+Next you choose which bot you wish to visit sites for.
 
 You should see the script visiting websites provided and earning crypto for you.
 At some point it will run out of websites to visit and wait until more become available.
 
-Ensure to run from a directory in which you have write permissions
+Ensure to run from a directory in which you have write permissions so
+that the session can be stored successfully.
+
 ## Developer notes
 
 With `poetry` there is no need to have a `setup.py` in the root. Just run
