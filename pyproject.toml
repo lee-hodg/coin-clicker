@@ -1,23 +1,23 @@
 [tool.poetry]
 name = "coin-clicker"
-version = "1.0.3"
+version = "1.0.6"
 description = "Auto-clicks telegram crypto-bot websites to earn money."
 authors = ["lee <lee@logicon.io>"]
 maintainers = ["lee <lee@logicon.io>"]
 repository = "https://github.com/lee-hodg/coin-clicker"
 license = "MIT"
 readme = "README.md"
-keywords = ['LTC', 'Telegram', 'Automate', 'Cyrpto', 'Click']
+keywords = ['LTC', 'Telegram', 'Automate', 'Crypto', 'Click']
 
 [tool.poetry.dependencies]
-python = "^3.8"
-webdriver-manager = "^3.2.2"
-selenium = "^3.141.0"
+python = "^3.6"
 asyncio = "^3.4.3"
 Telethon = "^1.18.2"
 PyInquirer = "^1.0.3"
 pyfiglet = "^0.8.post1"
 coloredlogs = "^15.0"
+colorama = "^0.4.4"
+bs4 = "^0.0.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

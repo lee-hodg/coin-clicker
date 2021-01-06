@@ -10,6 +10,10 @@
 The purpose of this app is to visit telegram clickbot channels and automatically visit
 the websites they provide in order to earn crypto-currency, such as LTC.
 
+## Requirements
+
+Python 3.6+
+
 ## Installation
 
 ```bash
@@ -30,6 +34,7 @@ a browser doing the visits vs seeing Chrome popup and being automated (useful fo
 You should see the script visiting websites provided and earning crypto for you.
 At some point it will run out of websites to visit and wait until more become available.
 
+Ensure to run from a directory in which you have write permissions
 ## Developer notes
 
 With `poetry` there is no need to have a `setup.py` in the root. Just run
