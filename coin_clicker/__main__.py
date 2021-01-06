@@ -72,7 +72,7 @@ def claim_reward(code, token):
     try:
         response = requests.request('POST', "https://doge.click/reward", headers={"User-Agent": settings.USER_AGENT},
                                     data={'code': code, 'token': token},
-                                    timeout=15)
+                                    timeout=20)
         response.raise_for_status()
     except requests.exceptions.RequestException as reward_exc:
         logger.error(reward_exc)
@@ -201,7 +201,7 @@ async def main(phone_number, bot_choice):
 
     # Connect to client
     try:
-        client = TelegramClient('session/' + phone_number, settings.API_ID, settings.API_HASH)
+        client = TelegramClient(f'session/{phone_number}', settings.API_ID, settings.API_HASH)
         await client.start(phone_number)
         me = await client.get_me()
     except OperationalError as db_err:
