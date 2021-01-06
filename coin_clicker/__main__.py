@@ -121,14 +121,16 @@ async def get_response_alt(client, event, url, bot_choice):
         retry_count = 0
         while wait_error is True and retry_count <= MAX_REWARD_RETRIES:
             retry_count += 1
-            logger.debug(f'\t [{retry_count}/{MAX_REWARD_RETRIES}]'
+            logger.debug(f'\t [Attempt {retry_count}/{MAX_REWARD_RETRIES}]'
                          f' Trying to claim the reward with code {code} and token {token}...')
             status_code, text = claim_reward(code, token)
             j_resp = json.loads(text)
             wait_error = 'You must wait' in j_resp['error']
             if wait_error:
                 logger.debug(j_resp['error'])
-                time.sleep(15)
+                how_long = re.findall(r'\d+', j_resp['error'])[0]
+                logger.debug(f'\t Waiting {how_long} seconds before retrying...')
+                time.sleep(int(how_long))
             elif j_resp['reward']:
                 logger.debug(f"Claimed reward of {j_resp['reward']}")
             else:

@@ -1,7 +1,7 @@
 # Coin clicker
 
 ![Made with love in Brazil](https://madewithlove.now.sh/br?heart=true&template=for-the-badge)
-
+[![Python](https://forthebadge.com/images/badges/made-with-python.svg)](https://forthebadge.com)
 
 ## Screenshot 
 
